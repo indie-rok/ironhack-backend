@@ -1,37 +1,34 @@
-import React, { Component } from "react";
-import "./app.css";
-import ReactImage from "./react.png";
+import React from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
-function Test() {
-  return <div>hello div</div>;
+import SignIn from "./features/Auth/SignIn";
+import SignUp from "./features/Auth/SignUP";
+import AllRooms from "./features/Rooms/AllRooms";
+import Menu from "./components/Menu";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./app.css";
+
+export default function App() {
+  return (
+    <>
+      <Router>
+        <Switch>
+          <Route path="/sign_up" component={SignUp} />
+          <Route path="/sign_in" component={SignIn} />
+          <Route>
+            <Menu />
+            <LoggedInContainer />
+          </Route>
+        </Switch>
+      </Router>
+    </>
+  );
 }
 
-export default class App extends Component {
-  state = { username: null };
-
-  componentDidMount() {
-    fetch("/api/getUsername")
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
-
-  render() {
-    const { username } = this.state;
-    return (
-      <div>
-        {username ? (
-          <h1>{`Hello ${username}`}</h1>
-        ) : (
-          <h1>Loading.. please wait!</h1>
-        )}
-        <img src={ReactImage} alt="react" />
-        <Router>
-          <Switch>
-            <Route path="/test" component={Test} />
-          </Switch>
-        </Router>
-      </div>
-    );
-  }
-}
+const LoggedInContainer = () => (
+  <>
+    {/* <PrivateRoute path="/films" component={AllMoviesScreen} /> */}
+    <Route path="/rooms" component={AllRooms} />
+  </>
+);
