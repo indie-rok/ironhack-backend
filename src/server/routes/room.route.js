@@ -23,8 +23,8 @@ router.get("/", (req, res, next) => {
   Room.find({})
     .limit()
     .select("name description imageUrl owner")
-    .then(movies => {
-      return res.send({ movies });
+    .then(rooms => {
+      return res.send({ rooms });
     })
     .catch(err => {
       return res.status(400).send({ msg: err });

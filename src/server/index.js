@@ -40,7 +40,7 @@ app.use(passport.session()); // calls the deserializeUser
 
 // Routes
 app.use("/api/user", user);
-app.use("/api/room", room);
+app.use("/api/rooms", room);
 
 // used for production build
 app.use(express.static("dist"));

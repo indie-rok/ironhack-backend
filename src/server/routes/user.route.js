@@ -41,7 +41,7 @@ router.post(
 
 router.get("/", (req, res, next) => {
   if (req.user) {
-    res.json({ user: req.user });
+    return res.json({ user: req.user });
   } else {
     res.status(404).json({ user: null });
   }
