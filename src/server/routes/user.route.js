@@ -5,12 +5,11 @@ const passport = require("../passport");
 
 router.post("/", (req, res) => {
   const { username, password } = req.body;
-
   User.findOne({ username: username }, (err, user) => {
     if (err) {
       console.log("User.js post error: ", err);
     } else if (user) {
-      res.json({
+      res.status(400).json({
         error: `Sorry, already a user with the username: ${username}`
       });
     } else {
@@ -19,7 +18,7 @@ router.post("/", (req, res) => {
         password: password
       });
       newUser.save((err, savedUser) => {
-        if (err) return res.json(err);
+        if (err) return res.status(400).json(err);
         res.status(201).json(savedUser);
       });
     }
