@@ -5,6 +5,7 @@ import SignIn from "./features/Auth/SignIn";
 import SignUp from "./features/Auth/SignUP";
 import AllRooms from "./features/Rooms/AllRooms";
 import Menu from "./components/Menu";
+import HomePage from "./features/HomePage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
@@ -20,6 +21,8 @@ export default function App() {
             <Menu />
             <LoggedInContainer />
           </Route>
+
+          <Route path="/" component={HomePage} />
         </Switch>
       </Router>
     </>

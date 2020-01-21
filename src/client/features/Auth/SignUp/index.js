@@ -18,7 +18,7 @@ export default function SignUp() {
       })
       .then(response => {
         const { data } = response;
-        history.push("/home");
+        history.push("/rooms");
       })
       .catch(err => {
         setError(`unable to log in with provided credentials: ${err.message}`);
