@@ -9,6 +9,7 @@ const app = express();
 const PORT = 8080;
 
 const user = require("./routes/user.route");
+const room = require("./routes/room.route");
 
 // used for better logs
 app.use(morgan("dev"));
@@ -39,6 +40,7 @@ app.use(passport.session()); // calls the deserializeUser
 
 // Routes
 app.use("/api/user", user);
+app.use("/api/room", room);
 
 // used for production build
 app.use(express.static("dist"));
