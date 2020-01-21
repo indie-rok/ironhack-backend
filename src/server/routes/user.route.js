@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../database/models/user.model");
+const { User } = require("../database/models/user.model");
 const passport = require("../passport");
 
 router.post("/", (req, res) => {
@@ -41,7 +41,7 @@ router.post(
     var userInfo = {
       username: req.user.username
     };
-    res.send(userInfo);
+    res.status(201).send(userInfo);
   }
 );
 
@@ -51,7 +51,7 @@ router.get("/", (req, res, next) => {
   if (req.user) {
     res.json({ user: req.user });
   } else {
-    res.json({ user: null });
+    res.status(404).json({ user: null });
   }
 });
 
