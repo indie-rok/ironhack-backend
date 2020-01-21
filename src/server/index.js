@@ -10,19 +10,23 @@ const PORT = 8080;
 
 const user = require("./routes/user.route");
 
-// MIDDLEWARE
+// used for better logs
 app.use(morgan("dev"));
+
+// used for express to understand req.body
 app.use(
   bodyParser.urlencoded({
     extended: false
   })
 );
+
+//use so express can understand json
 app.use(bodyParser.json());
 
-// Sessions
+// Sessions for passport
 app.use(
   session({
-    secret: "fraggle-rock", //pick a random string to make the hash that is generated secure
+    secret: "cookies", //pick a random string to make the hash that is generated secure
     store: new MongoStore({ mongooseConnection: dbConnection }),
     resave: false, //required
     saveUninitialized: false //required
@@ -36,6 +40,7 @@ app.use(passport.session()); // calls the deserializeUser
 // Routes
 app.use("/api/user", user);
 
+// used for production build
 app.use(express.static("dist"));
 
 // Starting Server
