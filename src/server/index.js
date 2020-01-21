@@ -1,22 +1,44 @@
 const express = require("express");
-const os = require("os");
-const mongoose = require("mongoose");
-
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const session = require("express-session");
+const dbConnection = require("./database/connect");
+const MongoStore = require("connect-mongo")(session);
+const passport = require("./passport");
 const app = express();
+const PORT = 8080;
 
-mongoose
-  .connect(
-    "mongodb+srv://indie-rok:Cheers2u@ironhack-test-rqer6.gcp.mongodb.net/ironhack?retryWrites=true&w=majority",
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch(err => console.error("Could not connect to MongoDB...", err));
+const user = require("./routes/user.route");
+
+// MIDDLEWARE
+app.use(morgan("dev"));
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
+app.use(bodyParser.json());
+
+// Sessions
+app.use(
+  session({
+    secret: "fraggle-rock", //pick a random string to make the hash that is generated secure
+    store: new MongoStore({ mongooseConnection: dbConnection }),
+    resave: false, //required
+    saveUninitialized: false //required
+  })
+);
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session()); // calls the deserializeUser
+
+// Routes
+app.use("/api/user", user);
 
 app.use(express.static("dist"));
-app.get("/api/getUsername", (req, res) =>
-  res.send({ username: os.userInfo().username })
-);
 
-app.listen(process.env.PORT || 8080, () =>
-  console.log(`Listening on port ${process.env.PORT || 8080}!`)
-);
+// Starting Server
+app.listen(PORT, () => {
+  console.log(`App listening on PORT: ${PORT}`);
+});
