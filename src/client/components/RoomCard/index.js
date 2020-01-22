@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 
 export default function RoomCard({ room, user }) {
   let history = useHistory();
+
+  const [review, setReview] = useState("");
 
   const handleDelete = room_id => {
     axios
@@ -15,6 +17,8 @@ export default function RoomCard({ room, user }) {
       })
       .catch(err => console.log(err));
   };
+
+  const handleCreateReview = () => {};
 
   const renderAdminButtons = () => {
     if (room.owner === user._id) {
@@ -38,6 +42,8 @@ export default function RoomCard({ room, user }) {
         <Card.Title>{room.name}</Card.Title>
         <Card.Text>{room.description}</Card.Text>
         {renderAdminButtons()}
+
+        <h3>Reviews</h3>
       </Card.Body>
     </Card>
   );

@@ -25,7 +25,7 @@ router.post("/", [isAuthorized], (req, res, next) => {
 router.get("/", (req, res, next) => {
   Room.find({})
     .limit()
-    .select("name description imageUrl owner")
+    .select("name description imageUrl owner reviews")
     .then(rooms => {
       return res.send({ rooms });
     })

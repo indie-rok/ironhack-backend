@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, rxequired: true },
   description: { type: String, required: true },
   imageUrl: { type: String, required: true },
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", reuqired: true },
-  reviews: [] // we will update this field a bit later when we create review model
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }]
 });
 
 RoomSchema.methods = {};
