@@ -47,4 +47,38 @@ router.delete("/:room_id", (req, res, next) => {
   }
 });
 
+router.get("/:room_id", (req, res, next) => {
+  if (mongoose.Types.ObjectId.isValid(req.params.room_id)) {
+    Room.findOne({ _id: req.params.room_id })
+      .then(room => {
+        return res.send(room);
+      })
+      .catch(err => {
+        console.log(err);
+        return res.send(400).send({ msg: "error while deleting id" });
+      });
+  } else {
+    res.status(400).send({ msg: "invalid id" });
+  }
+});
+
+router.patch("/:room_id", (req, res, next) => {
+  const { name, description, imageUrl } = req.body;
+
+  if (mongoose.Types.ObjectId.isValid(req.params.room_id)) {
+    Room.findOneAndUpdate(
+      { _id: req.params.room_id },
+      { name, description, imageUrl }
+    )
+      .then(room => {
+        return res.send(room);
+      })
+      .catch(err => {
+        return res.send(400).send({ msg: "error while deleting id" });
+      });
+  } else {
+    res.status(400).send({ msg: "invalid id" });
+  }
+});
+
 module.exports = router;

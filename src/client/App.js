@@ -7,6 +7,7 @@ import AllRooms from "./features/Rooms/AllRooms";
 import Menu from "./components/Menu";
 import HomePage from "./features/HomePage";
 import AddRoom from "./features/Rooms/AddRoom";
+import EditRoom from "./features/Rooms/EditRoom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
@@ -35,5 +36,6 @@ const LoggedInContainer = () => (
     <Menu />
     <Route path="/rooms" component={AllRooms} />
     <Route path="/add_room" component={AddRoom} />
+    <Route path="/edit_room/:room_id" component={EditRoom} />
   </>
 );

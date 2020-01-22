@@ -32,7 +32,7 @@ export default function RoomCard({ room, user }) {
   };
 
   return (
-    <Card key={room._id} style={{ width: "18rem" }}>
+    <Card key={room._id} className="mt-5 mb-5 border ">
       <Card.Img variant="top" src={room.imageUrl} />
       <Card.Body>
         <Card.Title>{room.name}</Card.Title>

@@ -25,8 +25,15 @@ export default function AllRooms() {
       });
   }, []);
 
-  const drawRooms = () =>
-    rooms.map(room => <RoomCard room={room} key={room._id} user={user} />);
+  const drawRooms = () => {
+    if (rooms.length === 0) {
+      return <Alert variant="info">No rooms</Alert>;
+    } else {
+      return rooms.map(room => (
+        <RoomCard room={room} key={room._id} user={user} />
+      ));
+    }
+  };
 
   const drawErrors = () => {
     return error ? (
@@ -45,9 +52,7 @@ export default function AllRooms() {
         <Col>{drawErrors()}</Col>
       </Row>
       <Row>
-        <Col>
-          <CardColumns>{drawRooms()}</CardColumns>
-        </Col>
+        <Col>{drawRooms()}</Col>
       </Row>
     </Container>
   );
