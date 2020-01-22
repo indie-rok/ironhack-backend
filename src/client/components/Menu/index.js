@@ -14,6 +14,9 @@ export default function Menu() {
           <Nav.Link as={Link} to="/add_room">
             <Button>Add Room</Button>
           </Nav.Link>
+          <Nav.Link as={Link} to="/sign_in">
+            Logout
+          </Nav.Link>
         </Nav>
       </Navbar>
     </>

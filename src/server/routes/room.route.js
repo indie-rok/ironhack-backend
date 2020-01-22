@@ -2,8 +2,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const { Room } = require("../database/models/room.model");
+const { isAuthorized } = require("../passport/auth");
+const { userIsOwner } = require("../helpers/rooms");
 
-router.post("/", (req, res, next) => {
+router.post("/", [isAuthorized], (req, res, next) => {
   const { name, description, imageUrl } = req.body;
   const { user } = req;
 
@@ -32,7 +34,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.delete("/:room_id", (req, res, next) => {
+router.delete("/:room_id", [isAuthorized, userIsOwner], (req, res, next) => {
   if (mongoose.Types.ObjectId.isValid(req.params.room_id)) {
     Room.findOneAndRemove({ _id: req.params.room_id })
       .then(response => {
@@ -62,7 +64,7 @@ router.get("/:room_id", (req, res, next) => {
   }
 });
 
-router.patch("/:room_id", (req, res, next) => {
+router.patch("/:room_id", [isAuthorized, userIsOwner], (req, res, next) => {
   const { name, description, imageUrl } = req.body;
 
   if (mongoose.Types.ObjectId.isValid(req.params.room_id)) {

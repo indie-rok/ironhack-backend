@@ -1,0 +1,7 @@
+module.exports.isAuthorized = function loggedIn(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).send({ msg: "not logged in" });
+  }
+};
