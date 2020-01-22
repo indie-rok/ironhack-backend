@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function AddRoom() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  let history = useHistory();
+  const [name, setName] = useState("my name");
+  const [description, setDescription] = useState("my description");
+  const [imageUrl, setImageUrl] = useState("http://dummyimage.com/200x100");
   const [errors, setErrors] = useState(null);
 
   const handleSubmit = () => {
     axios
       .post("/api/rooms", { name, description, imageUrl })
       .then(response => {
-        console.log(response);
+        history.push("/rooms");
       })
       .catch(err => {
         setErrors(`Error creating the room  ${err}`);
