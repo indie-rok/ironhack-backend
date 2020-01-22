@@ -1,13 +1,35 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import axios from "axios";
 
 export default function AddRoom() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [errors, setErrors] = useState(null);
+
+  const handleSubmit = () => {
+    axios
+      .post("/api/rooms", { name, description, imageUrl })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        setErrors(`Error creating the room  ${err}`);
+      });
+  };
+
+  const renderErrors = () => {
+    if (errors) {
+      return <Alert variant="danger">{errors}</Alert>;
+    }
+  };
 
   return (
     <Container>
+      <Row>
+        <Col>{renderErrors()}</Col>
+      </Row>
       <Row>
         <Col>
           <Form>
@@ -41,7 +63,7 @@ export default function AddRoom() {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" onClick={handleSubmit}>
               Submit
             </Button>
           </Form>

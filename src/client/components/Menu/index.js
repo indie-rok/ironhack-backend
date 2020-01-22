@@ -12,7 +12,7 @@ export default function Menu() {
             All Rooms
           </Nav.Link>
           <Nav.Link as={Link} to="/add_room">
-            Add Room
+            <Button>Add Room</Button>
           </Nav.Link>
         </Nav>
       </Navbar>
